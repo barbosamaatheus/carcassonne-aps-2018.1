@@ -25,7 +25,6 @@ public class Partida {
 		jogadores = carregaJogadores(sequencia);
 	}
 	
-	//TESTE 2
 	public ArrayList<Jogador> carregaJogadores(Cor... sequencia){
 		ArrayList<Jogador> temp = new ArrayList<Jogador>();
 		for(Cor cor: sequencia) {
@@ -56,13 +55,10 @@ public class Partida {
 	}
 	
 	public String relatorioTurno() {
-		/* TESTE 3
-		 * if(!isPartidaEmAndamento())
+		if(!isPartidaEmAndamento())
 			throw new ExcecaoJogo("Partida finalizada");
-			*/
 		return montaRelatorioTurno();
 	}
-	//// FIM TESTE 2
 	
 	public Partida girarTile() {
 		proximoTile.girar();
@@ -71,10 +67,9 @@ public class Partida {
 
 	private void pegarProximoTile() {
 		proximoTile = tiles.pegar();
-		/*TESTE 3
 		if(proximoTile == null) {
 			setPartidaEmAndamento(false);
-		}else*/
+		}else
 			proximoTile.reset();
 	}
 
