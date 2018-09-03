@@ -11,7 +11,6 @@ public class Partida {
 	private Tile proximoTile;
 	private TabuleiroFlexivel tabuleiro = new TabuleiroFlexivel("  ");
 	
-	//TESTE2
 	private ArrayList<Jogador> jogadores; 
 	private EstadoTurno estadoTurno = EstadoTurno.Tile_Posicionado;
 	private boolean partidaEmAndamento = true;
@@ -23,6 +22,7 @@ public class Partida {
 		pegarProximoTile();
 		tileTurnoAtual = proximoTile;
 		jogadores = carregaJogadores(sequencia);
+		tabuleiro.adicionarPrimeiroTile(tileTurnoAtual);
 	}
 	
 	public ArrayList<Jogador> carregaJogadores(Cor... sequencia){
@@ -41,8 +41,6 @@ public class Partida {
 				relatorio +=  j.toString();
 			}else relatorio +=  j.toString() + "; ";
 		}
-		System.out.println(jogadores.toString());
-		System.out.println(relatorio);
 		return relatorio;
 	}
 
@@ -54,13 +52,23 @@ public class Partida {
 		return "Jogador: " + jogadores.get(jogadorAtual).getCor() +"\nTile: " + tileTurnoAtual.toString() + "\nStatus: "+ getEstadoTurno();
 	}
 	
-	public String relatorioTurno() {
+	public void verificaPartidaFinalizou() {
 		if(!isPartidaEmAndamento())
 			throw new ExcecaoJogo("Partida finalizada");
+	}
+	
+	public String relatorioTurno() {
+		verificaPartidaFinalizou();
 		return montaRelatorioTurno();
 	}
 	
+	public boolean isTilePosicionado() {
+		return getEstadoTurno() == EstadoTurno.Tile_Posicionado;
+	}
+	
 	public Partida girarTile() {
+		if(isTilePosicionado())
+			throw new ExcecaoJogo("Não pode girar tile já posicionado");
 		proximoTile.girar();
 		return this;
 	}
@@ -71,9 +79,12 @@ public class Partida {
 			setPartidaEmAndamento(false);
 		}else
 			proximoTile.reset();
+		tileTurnoAtual = proximoTile;
 	}
 
 	public Partida finalizarTurno() {
+		jogadorAtual++;
+		setEstadoTurno(EstadoTurno.Início_Turno);
 		pegarProximoTile();
 		return this;
 	}
@@ -116,7 +127,7 @@ public class Partida {
 	}
 
 	public String relatorioTabuleiro() {
-		return tileTurnoAtual.toString();
+		return tabuleiro.toString();
 	}
 	
 	public boolean isPartidaEmAndamento() {
