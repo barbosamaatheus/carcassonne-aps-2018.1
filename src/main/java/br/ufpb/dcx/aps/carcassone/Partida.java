@@ -69,6 +69,9 @@ public class Partida {
 	public Partida girarTile() {
 		if(isTilePosicionado())
 			throw new ExcecaoJogo("Não pode girar tile já posicionado");
+		if(!isPartidaEmAndamento()){
+			throw new ExcecaoJogo("Não pode girar tiles com a partida finalizada");
+		}
 		proximoTile.girar();
 		return this;
 	}
