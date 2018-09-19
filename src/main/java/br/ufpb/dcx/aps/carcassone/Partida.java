@@ -94,6 +94,8 @@ public class Partida {
 
 	public Partida posicionarTile(Tile tileReferencia, Lado ladoTileReferencia) {
 		tabuleiro.posicionar(tileReferencia, ladoTileReferencia, proximoTile);
+		setEstadoTurno(EstadoTurno.Tile_Posicionado);
+		
 		return this;
 	}
 
