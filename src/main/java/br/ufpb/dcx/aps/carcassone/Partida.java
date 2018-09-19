@@ -15,7 +15,7 @@ public class Partida {
 	private EstadoTurno estadoTurno = EstadoTurno.Tile_Posicionado;
 	private boolean partidaEmAndamento = true;
 	private Tile tileTurnoAtual;
-	private int jogadorAtual = 0;
+	int jogadorAtual = 0;
 
 	Partida(BolsaDeTiles tiles, Cor ...sequencia) {
 		this.tiles = tiles;
@@ -49,12 +49,14 @@ public class Partida {
 	}
 	
 	public String montaRelatorioTurno() {
-		return "Jogador: " + jogadores.get(jogadorAtual).getCor() +"\nTile: " + tileTurnoAtual.toString() + "\nStatus: "+ getEstadoTurno();
+		Jogador proximoJogador = jogadores.get(jogadorAtual % jogadores.size());
+		return "Jogador: " + proximoJogador.getCor() +"\nTile: " + tileTurnoAtual.toString() + "\nStatus: "+ getEstadoTurno();
 	}
 	
 	public void verificaPartidaFinalizou() {
-		if(!isPartidaEmAndamento())
+		if(!isPartidaEmAndamento()){
 			throw new ExcecaoJogo("Partida finalizada");
+		}
 	}
 	
 	public String relatorioTurno() {
@@ -80,15 +82,17 @@ public class Partida {
 		proximoTile = tiles.pegar();
 		if(proximoTile == null) {
 			setPartidaEmAndamento(false);
-		}else
+		}else{
+			
 			proximoTile.reset();
+		}
 		tileTurnoAtual = proximoTile;
 	}
 
 	public Partida finalizarTurno() {
-		jogadorAtual++;
-		setEstadoTurno(EstadoTurno.Início_Turno);
 		pegarProximoTile();
+		jogadorAtual++;		
+		setEstadoTurno(EstadoTurno.Início_Turno);
 		return this;
 	}
 
