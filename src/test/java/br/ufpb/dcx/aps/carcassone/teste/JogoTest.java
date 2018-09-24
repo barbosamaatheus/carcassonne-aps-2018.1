@@ -23,8 +23,8 @@ import br.ufpb.dcx.aps.carcassone.tabuleiro.Tile;
  */
 public class JogoTest {
 
-	private Jogo jogo;
-	private BolsaDeTiles tiles;
+	protected Jogo jogo;
+	protected BolsaDeTiles tiles;
 
 	@Before
 	public void novoJogo() {
