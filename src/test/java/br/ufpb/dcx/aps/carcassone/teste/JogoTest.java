@@ -578,31 +578,31 @@ public class JogoTest {
 		Assert.assertEquals("30(NO,NE) 51(NO,NE,SE-VERMELHO)\n30(SO,SE) 02(NO,NE) 51(SO)", partida.getCampos());
 	}
 	
-	private void girar(Partida partida, int quantidade) {
+	protected void girar(Partida partida, int quantidade) {
 		for (int i = 0; i < quantidade; i++) {
 			partida.girarTile();
 		}
 	}
 
-	private void ocorreExcecaoJogo(ExceptionThrower et, String mensagem) {
+	protected void ocorreExcecaoJogo(ExceptionThrower et, String mensagem) {
 		ocorreExcecao(et).tipoExcecao(ExcecaoJogo.class).mensagem(mensagem);
 	}
 
-	private void mockarTiles(BolsaDeTiles mock, Tile primeiro, Tile... tiles) {
+	protected void mockarTiles(BolsaDeTiles mock, Tile primeiro, Tile... tiles) {
 		when(mock.pegar()).thenReturn(primeiro, Arrays.copyOf(tiles, tiles.length + 1));
 	}
 
-	private void verificarRelatorioPartida(Partida partida, String status, String sequencia) {
+	protected void verificarRelatorioPartida(Partida partida, String status, String sequencia) {
 		String relatorio = partida.relatorioPartida();
 		Assert.assertEquals("Status: " + status + "\nJogadores: " + sequencia, relatorio);
 	}
 
-	private void verificarRelatorioTurno(Partida partida, String jogador, String tile, String status) {
+	protected void verificarRelatorioTurno(Partida partida, String jogador, String tile, String status) {
 		String relatorio = partida.relatorioTurno();
 		Assert.assertEquals("Jogador: " + jogador + "\nTile: " + tile + "\nStatus: " + status, relatorio);
 	}
 
-	private void verificarRelatorioTabuleiro(Partida partida, String configuracao) {
+	protected void verificarRelatorioTabuleiro(Partida partida, String configuracao) {
 		Assert.assertEquals(configuracao, partida.relatorioTabuleiro());
 	}
 

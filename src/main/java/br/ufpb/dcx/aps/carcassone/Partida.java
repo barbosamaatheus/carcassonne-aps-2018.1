@@ -17,7 +17,7 @@ public class Partida {
 	private Tile tileTurnoAtual;
 	int jogadorAtual = 0;
 
-	Partida(BolsaDeTiles tiles, Cor ...sequencia) {
+	(BolsaDeTiles tiles, Cor ...sequencia) {
 		this.tiles = tiles;
 		pegarProximoTile();
 		tileTurnoAtual = proximoTile;
