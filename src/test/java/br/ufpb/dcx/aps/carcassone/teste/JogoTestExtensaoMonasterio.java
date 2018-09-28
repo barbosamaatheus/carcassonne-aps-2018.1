@@ -33,6 +33,7 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 		//posicionar o t48 no sul de t30
 		partida.posicionarTile(t30, SUL);
 		//o norte do t48 ta apontando para o norte
+		partida.posicionarMeepleMosteiro();
 		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
 		//o jogador PRETO está com um Meeple a menos
 		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");
@@ -129,25 +130,24 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 	public void MonasterioIncompletoComPartidaEmAndamento() {
 		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62);
 		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
-		partida.finalizarTurno();
 		
-		//segundo turno t48
-		//posicionar o t48 no sul de t30
+		partida.finalizarTurno();
 		partida.posicionarTile(t30, SUL);
-		//o norte do t48 ta apontando para o norte
+		
+		partida.posicionarMeepleMosteiro();
 		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
-		//o jogador PRETO está com um Meeple a menos
+		
 		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");
 		
 		partida.finalizarTurno();
 		
-		//terceiro turno t29
+		
 		girar(partida, 1);
 		partida.posicionarTile(t48, LESTE);
 		
 		partida.finalizarTurno();
 		
-		//quarto turno t60
+		
 		partida.posicionarTile(t30, LESTE);
 		partida.finalizarTurno();
 				
@@ -162,22 +162,19 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 	 */
 	@Test
 	public void MonasterioComDoisMeeples() {
-		mockarTiles(tiles, t30, t49);
+		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62);
 		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
 		partida.finalizarTurno();
-		//segundo turno
-		girar(partida, 1); //rever
+		
 		partida.posicionarTile(t30, SUL);
 		partida.posicionarMeepleMosteiro();
-		verificarRelatorioTurno(partida, "VERDE", "49S", "Tile_Posicionado");
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,6); PRETO(0,7)");
+		
+		ocorreExcecaoJogo(() -> partida.posicionarMeepleMosteiro(),
+				"Impossível posicionar: tile já contém meeple");
+		verificarRelatorioTurno(partida, "VERDE", "48N", "Tile_Posicionado");
+		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,7)");
 		partida.finalizarTurno();
 		
-		//tereciro turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
-		partida.posicionarMeepleMosteiro();
-		partida.finalizarTurno();
 	}
 	
 	 
@@ -189,17 +186,16 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 	 */
 	@Test
 	public void	PartidaFinalizadaComMonasterioIncompleto() {
-		mockarTiles(tiles, t30, t49);
+		mockarTiles(tiles, t30, t48);
 		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
+		
 		partida.finalizarTurno();
-		//segundo turno
-		girar(partida, 1); //rever
 		partida.posicionarTile(t30, SUL);
+		
 		partida.posicionarMeepleMosteiro();
-		verificarRelatorioTurno(partida, "VERDE", "49S", "Tile_Posicionado");
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,6); PRETO(0,7)");
+		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
 		partida.finalizarTurno();
-		verificarRelatorioPartida(partida, "Partida_Finalizada", "VERDE(2,7); PRETO(0,7)");
+		verificarRelatorioPartida(partida, "Partida_Finalizada", "VERDE(0,7); PRETO(2,7)");
 		
 		
 	}
