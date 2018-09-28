@@ -25,58 +25,53 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 	 */
 	@Test
 	public void MonasterioCompletoComMeeple() {
-		mockarTiles(tiles, t30, t49, t29);
+		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62);
 		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
 		partida.finalizarTurno();
-		//primeiro turno
-		girar(partida, 1); //rever
+		
+		//segundo turno t48
+		//posicionar o t48 no sul de t30
 		partida.posicionarTile(t30, SUL);
-		partida.posicionarMeepleMosteiro();
-		verificarRelatorioTurno(partida, "VERDE", "49S", "Tile_Posicionado");
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,6); PRETO(0,7)");
+		//o norte do t48 ta apontando para o norte
+		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
+		//o jogador PRETO está com um Meeple a menos
+		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");
+		
 		partida.finalizarTurno();
 		
-		//segundo turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
+		//terceiro turno t29
+		girar(partida, 1);
+		partida.posicionarTile(t48, LESTE);
+		
 		partida.finalizarTurno();
 		
-		//terceiro turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
+		//quarto turno t60
+		partida.posicionarTile(t30, LESTE);
 		partida.finalizarTurno();
 				
-		//quarto turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
+		//quinto turno t27
+		partida.posicionarTile(t30, OESTE);
 		partida.finalizarTurno();
 		
-		//quinto turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
+		//sexto turno t52
+		partida.posicionarTile(t27, SUL);
 		partida.finalizarTurno();
 				
-		//sexto turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
+		//setimo turno t31
+		girar(partida, 3);
+		partida.posicionarTile(t52, SUL);
 		partida.finalizarTurno();
 		
-		//sétimo turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
+		//oitavo turno t61
+		partida.posicionarTile(t30, SUL);
 		partida.finalizarTurno();
 		
-		//oitavo turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
+		//nono turno t62
+		girar(partida, 1);
+		partida.posicionarTile(t61,LESTE);
 		partida.finalizarTurno();
-				
-		//nono turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(tileReferencia, ladoTileReferencia);
-		partida.finalizarTurno();
-			
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(9,7); PRETO(0,7)");
+					
+		verificarRelatorioPartida(partida, "Partida_Finalizada", "VERDE(0,7); PRETO(9,7)");
 		
 	}
 	
@@ -86,19 +81,19 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 	 */
 	@Test
 	public void MonasterioCompletoSemMeeple() {
-		mockarTiles(tiles, t30, t49, t29);
+		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62);
 		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
-		partida.finalizarTurno();
-		//primeiro turno
-		girar(partida, 1); //rever
-		partida.posicionarTile(t30, SUL);
-		
-		verificarRelatorioTurno(partida, "VERDE", "49S", "Tile_Posicionado");
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,7)");
 		partida.finalizarTurno();
 		
 		//segundo turno
-		girar(partida, 1); //rever
+		partida.posicionarTile(t30, SUL);
+		
+		verificarRelatorioTurno(partida, "VERDE", "49S", "Tile_Posicionado"); //ver como funciona
+		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,7)");
+		partida.finalizarTurno();
+		
+		//terceiro turno
+		girar(partida, 1);
 		partida.posicionarTile(tileReferencia, ladoTileReferencia);
 		partida.finalizarTurno();
 		
