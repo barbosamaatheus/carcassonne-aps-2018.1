@@ -265,21 +265,91 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 	@Test
 	public void JardimCompletoSemMeeple() {
 		
+		mockarTiles(tiles, t30, t72, t29, t31, t01, t03, t27, t08, t02);
+		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
+		partida.finalizarTurno();
+		
+		//T72
+		partida.posicionarTile(t30, LESTE);	
+				
+		verificarRelatorioTurno(partida, "PRETO", "72N", "Tile_Posicionado");		
+		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,7)");		
+		partida.finalizarTurno();
+		
+		//T29
+		girar(partida, 2);
+		partida.posicionarTile(t30, NORTE);		
+		partida.finalizarTurno();
+		
+		//T31
+		girar(partida, 1);
+		partida.posicionarTile(t72, NORTE);
+		partida.finalizarTurno();
+		
+		//T01
+		partida.posicionarTile(t31, LESTE);
+		partida.finalizarTurno();
+				
+		//T03
+		girar(partida, 2);
+		partida.posicionarTile(t30, SUL);
+		partida.finalizarTurno();
+				
+		//T27
+		girar(partida, 2);
+		partida.posicionarTile(t72, LESTE);
+		partida.finalizarTurno();
+	
+		//T08
+		girar(partida, 2);
+		partida.posicionarTile(t72, SUL);
+		partida.finalizarTurno();
+		
+		//T02
+		partida.posicionarTile(t08,LESTE);
+		partida.finalizarTurno();
+					
+		verificarRelatorioPartida(partida, "Partida_Finalizada", "VERDE(0,7); PRETO(0,7)");
+		
 	}
+	
+			
 	
 	/**
 	 * Caso de teste 08
-	 * Ao final de um turno com a partida em andamento em que o o monastério esteja incompleto, 
-	 * a pontuação do jogador não é alterada e o Meeple permanece no monastério.
+	 * Ao final de um turno com a partida em andamento em que o jardim esteja incompleto, 
+	 * a pontuação do jogador não é alterada e o Meeple permanece no jardim.
 	 */
 	@Test
 	public void JardimIncompletoComPartidaEmAndamento() {
+		
+		mockarTiles(tiles, t30, t72, t29);
+		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
+		partida.finalizarTurno();
+		
+		//T72
+		partida.posicionarTile(t30, LESTE);	
+		
+		partida.posicionarMeepleJardim();
+		
+		verificarRelatorioTurno(partida, "PRETO", "72N", "Tile_Posicionado");		
+		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");		
+		partida.finalizarTurno();
+		
+		//T29
+		girar(partida, 2);
+		partida.posicionarTile(t30, NORTE);		
+		verificarRelatorioTurno(partida, "VERDE", "29S", "Tile_Posicionado");		
+		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");		
+		partida.finalizarTurno();
+	
+		
 		
 	}
 	
 	/**
 	 * Caso de teste 09
-	 * Verifica se lança exceções para tentativas de adicionar Meeples em um Monastério já ocupado por um outro Meeple.
+	 * Verifica se lança exceções para tentativas de adicionar Meeples em um jardim já ocupado por um outro Meeple.
 	 */
 	@Test
 	public void JardimComDoisMeeples() {
@@ -336,6 +406,7 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 	 */
 	@Test
 	public void PartidaFinalizadaComJardimJuntos() {
+		
 		
 	}
 	
