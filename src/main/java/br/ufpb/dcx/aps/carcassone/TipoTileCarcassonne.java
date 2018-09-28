@@ -6,7 +6,8 @@ import br.ufpb.dcx.aps.carcassone.tabuleiro.TipoTile;
 public class TipoTileCarcassonne extends TipoTile{
 
 	private Origem origem;
-
+	
+	private boolean jardim;
 	private boolean escudo;
 	private boolean mosteiro;
 	private boolean cidadeContinua;
@@ -15,11 +16,12 @@ public class TipoTileCarcassonne extends TipoTile{
 	}
 
 	public TipoTileCarcassonne(Origem origem, TipoLado ladoNorte, TipoLado ladoLeste, TipoLado ladoSul, TipoLado ladoOeste,
-			boolean escudo, boolean mosteiro, boolean cidadeContinua) {
+			boolean escudo, boolean mosteiro, boolean jardim, boolean cidadeContinua) {
 		super(ladoNorte, ladoLeste, ladoSul, ladoOeste);
 		this.origem = origem;
 		this.escudo = escudo;
 		this.mosteiro = mosteiro;
+		this.jardim = jardim;
 		this.cidadeContinua = cidadeContinua;
 	}
 	
@@ -45,6 +47,15 @@ public class TipoTileCarcassonne extends TipoTile{
 
 	public void setMosteiro(boolean mosteiro) {
 		this.mosteiro = mosteiro;
+	}
+	
+	
+	public boolean isJardim() {
+		return jardim;
+	}
+
+	public void setJardim(boolean jardim) {
+		this.jardim = jardim;
 	}
 
 	public boolean isCidadeContinua() {

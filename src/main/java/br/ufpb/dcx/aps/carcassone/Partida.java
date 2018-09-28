@@ -152,5 +152,10 @@ public class Partida {
 	public void setEstadoTurno(EstadoTurno estadoTurno) {
 		this.estadoTurno = estadoTurno;
 	}
+
+	public void posicionarMeepleJardim() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
