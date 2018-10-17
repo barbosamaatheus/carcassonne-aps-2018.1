@@ -16,6 +16,7 @@ public class Partida {
 	private boolean partidaEmAndamento = true;
 	private Tile tileTurnoAtual;
 	int jogadorAtual = 0;
+	private boolean estadoMeeple = false;
 
 	public Partida (BolsaDeTiles tiles, Cor ...sequencia) {
 		this.tiles = tiles;
@@ -116,6 +117,8 @@ public class Partida {
 	}
 
 	public Partida posicionarMeepleMosteiro() {
+		if(estadoMeeple) throw new ExcecaoJogo("Impossível posicionar Meeple: tile já contém Meeple Posicionado");
+		estadoMeeple = true;
 		return this;
 	}
 
