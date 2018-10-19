@@ -36,5 +36,17 @@ public class Jogador {
 		this.meeples = meeples;
 	}
 	
+	public void upMeeples() {
+		this.meeples++;
+	}
+	
+	public void downMeeples() {
+		this.meeples--;
+	}
+	
+	public void resetMeeples() {
+		this.meeples = 7;
+	}
+	
 	
 }

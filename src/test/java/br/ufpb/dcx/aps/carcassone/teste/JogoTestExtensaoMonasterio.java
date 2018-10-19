@@ -64,7 +64,7 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 		partida.finalizarTurno();
 		
 		//Turno 8- Tile: 61
-		partida.posicionarTile(t30, SUL);
+		partida.posicionarTile(t48, SUL);
 		partida.finalizarTurno();
 		
 		//Turno 9- Tile: 62
@@ -167,8 +167,9 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 		
 		ocorreExcecaoJogo(() -> partida.posicionarMeepleMosteiro(),
 				"Impossível posicionar Meeple: tile já contém Meeple Posicionado");
+		
 		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,7)");	
+		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");	
 	}
 	
 	 

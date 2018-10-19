@@ -1,5 +1,6 @@
 package br.ufpb.dcx.aps.carcassone.tabuleiro;
 
+import br.ufpb.dcx.aps.carcassone.Jogador;
 import br.ufpb.dcx.aps.carcassone.Lado;
 
 public class Tile {
@@ -36,8 +37,9 @@ public class Tile {
 		return meeple;
 	}
 
-	public void setMeeple(boolean meeple) {
+	public void setMeeple(boolean meeple, Jogador jogador) {
 		this.meeple = meeple;
+		jogador.downMeeples();
 	}
 
 	public TipoTile getTipoTile() {

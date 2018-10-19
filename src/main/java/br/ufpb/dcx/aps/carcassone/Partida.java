@@ -78,11 +78,22 @@ public class Partida {
 		proximoTile.girar();
 		return this;
 	}
-
+	
+	
+	
+	private void finalizarPartida() {
+		setPartidaEmAndamento(false);
+		for(Jogador j : jogadores) {
+			j.resetMeeples();
+		}
+		
+		
+	}
+	
 	private void pegarProximoTile() {
 		proximoTile = tiles.pegar();
 		if(proximoTile == null) {
-			setPartidaEmAndamento(false);
+			finalizarPartida();
 		}else{
 			
 			proximoTile.reset();
@@ -100,7 +111,7 @@ public class Partida {
 	public Partida posicionarTile(Tile tileReferencia, Lado ladoTileReferencia) {
 		tabuleiro.posicionar(tileReferencia, ladoTileReferencia, proximoTile);
 		setEstadoTurno(EstadoTurno.Tile_Posicionado);
-		
+				
 		return this;
 	}
 
@@ -117,14 +128,14 @@ public class Partida {
 	}
 
 	public Partida posicionarMeepleMosteiro() {
-		System.out.println("-----"+tileTurnoAtual.toString());
-		System.out.println("---"+tileTurnoAtual.isMeeple());
+		System.out.println("atual" + tileTurnoAtual);
+		System.out.println("tem meeple? " + tileTurnoAtual.isMeeple() );
+		System.out.println("estado partida:" + getEstadoPartida());
 		if(tileTurnoAtual.isMeeple()) {
 			throw new ExcecaoJogo("Impossível posicionar Meeple: tile já contém Meeple Posicionado");
 		}
 		else {
-			this.tileTurnoAtual.setMeeple(true);
-			this.jogadores.get(jogadorAtual).setPontuacao(2);
+			this.tileTurnoAtual.setMeeple(true, jogadores.get(jogadorAtual));
 		}
 		
 		return this;

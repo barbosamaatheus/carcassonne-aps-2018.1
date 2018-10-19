@@ -30,6 +30,7 @@ public class Jogo {
 	}
 	
 	public Partida criarPartida(BolsaDeTiles tiles, Cor... sequencia) {
+		executaVerificacoes(tiles, sequencia);
 		return new Partida(tiles, sequencia);
 	}
 
