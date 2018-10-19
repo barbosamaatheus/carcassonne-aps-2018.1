@@ -3,7 +3,7 @@ package br.ufpb.dcx.aps.carcassone.tabuleiro;
 import br.ufpb.dcx.aps.carcassone.Lado;
 
 public class Tile {
-
+	private boolean meeple;
 	private String id;
 	private Lado orientacao;
 	private TipoTile tipoTile;
@@ -13,6 +13,7 @@ public class Tile {
 	private TipoLado ladoOeste;
 
 	public Tile(String id, TipoTile tipoTile) {
+		this.meeple = false;
 		this.id = id;
 		this.tipoTile = tipoTile;
 		this.orientacao = Lado.NORTE;
@@ -28,6 +29,15 @@ public class Tile {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	
+	public boolean isMeeple() {
+		return meeple;
+	}
+
+	public void setMeeple(boolean meeple) {
+		this.meeple = meeple;
 	}
 
 	public TipoTile getTipoTile() {

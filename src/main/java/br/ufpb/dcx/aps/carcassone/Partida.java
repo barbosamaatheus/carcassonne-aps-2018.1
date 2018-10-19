@@ -117,8 +117,16 @@ public class Partida {
 	}
 
 	public Partida posicionarMeepleMosteiro() {
-		if(estadoMeeple) throw new ExcecaoJogo("Impossível posicionar Meeple: tile já contém Meeple Posicionado");
-		estadoMeeple = true;
+		System.out.println("-----"+tileTurnoAtual.toString());
+		System.out.println("---"+tileTurnoAtual.isMeeple());
+		if(tileTurnoAtual.isMeeple()) {
+			throw new ExcecaoJogo("Impossível posicionar Meeple: tile já contém Meeple Posicionado");
+		}
+		else {
+			this.tileTurnoAtual.setMeeple(true);
+			this.jogadores.get(jogadorAtual).setPontuacao(2);
+		}
+		
 		return this;
 	}
 
