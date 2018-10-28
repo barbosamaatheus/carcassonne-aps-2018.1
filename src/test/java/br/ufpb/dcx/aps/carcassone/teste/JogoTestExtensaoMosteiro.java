@@ -7,43 +7,43 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.ufpb.dcx.aps.carcassone.BolsaDeTiles;
-import br.ufpb.dcx.aps.carcassone.JogoExtensaoMonasterio;
+import br.ufpb.dcx.aps.carcassone.JogoExtensaoMosteiro;
 import br.ufpb.dcx.aps.carcassone.Partida;
 
-public class JogoTestExtensaoMonasterio extends JogoTest{
+public class JogoTestExtensaoMosteiro extends JogoTest{
 
 	@Before
 	public void novoJogo() {
 		tiles = mock(BolsaDeTiles.class);
-		jogo = new JogoExtensaoMonasterio();
+		jogo = new JogoExtensaoMosteiro();
 	}
 	
 	
 	/**
 	 * Caso de teste 01
-	 * Quando o monastério está totalmente rodeado por tiles válidos (8 tiles + ele próprio), 
+	 * Quando o mosteiro está totalmente rodeado por tiles válidos (8 tiles + ele próprio), 
 	 * o jogador soma 9 pontos e o Meeple é devolvido a ele. 	
 	 */
 	@Test
-	public void monasterioCompletoComMeeple() {
-		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62);
-		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
+	public void mosteiroCompletoComMeeple() {
+		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62, t01);
+		Partida partida = jogo.criarPartida(tiles, PRETO, VERMELHO);
 		partida.finalizarTurno();
 		
 		//Turno 2- Tile: 48		
 		partida.posicionarTile(t30, SUL);
 		partida.posicionarMeepleMosteiro();
-		
-		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
-		//Verificar se o jogador PRETO está com um Meeple a menos
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");
-		
 		partida.finalizarTurno();
+		
+		verificarRelatorioTurno(
+				partida, "VERMELHO", "48N", "Tile_Posicionado");
+		verificarRelatorioPartida(
+				partida, "Em_Andamento", "PRETO(0,7); VERMELHO(0,6)");
+		
 		
 		//Turno 3- Tile: 29
 		girar(partida, 1);
 		partida.posicionarTile(t48, LESTE);
-		
 		partida.finalizarTurno();
 		
 		//Turno 4- Tile: 60
@@ -70,27 +70,32 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 		//Turno 9- Tile: 62
 		girar(partida, 1);
 		partida.posicionarTile(t61,LESTE);
+		partida.finalizarTurno();
 		
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(9,7)");
+		verificarRelatorioPartida(partida, "Em_Andamento", "PRETO(0,7); VERMELHO(9,7)");
 		
 	}
 	
 	
 	/**
 	 * Caso de teste 02
-	 * Se o monastério é completado mas não tem nenhum Meeple, não deve somar pontuação a nenhum jogador.
+	 * Se o mosteiro é completado mas não tem nenhum Meeple, não deve somar pontuação a nenhum jogador.
 	 */
 	@Test
-	public void monasterioCompletoSemMeeple() {
-		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62);
-		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
+	public void mosteiroCompletoSemMeeple() {
+		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62, t01);
+		Partida partida = jogo.criarPartida(tiles, PRETO, VERMELHO);
 		partida.finalizarTurno();
 		
 		partida.posicionarTile(t30, SUL);
-		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,7)");
-		
 		partida.finalizarTurno();
+		
+		verificarRelatorioTurno(
+				partida, "VERMELHO", "48N", "Tile_Posicionado");
+		verificarRelatorioPartida(
+				partida, "Em_Andamento", "PRETO(0,7); VERMELHO(0,7)");
+		
+		
 		
 		girar(partida, 1);
 		partida.posicionarTile(t48, LESTE);
@@ -115,28 +120,29 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 		
 		girar(partida, 1);
 		partida.posicionarTile(t61,LESTE);
-					
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,7)");
+		partida.finalizarTurno();
+		
+		verificarRelatorioPartida(partida, "Em_Andamento", "PRETO(0,7); VERMELHO(0,7)");
 		
 	}
 	
 	
 	/**
 	 * Caso de teste 03
-	 * Ao final de um turno com a partida em andamento em que o o monastério esteja incompleto, 
-	 * a pontuação do jogador não é alterada e o Meeple permanece no monastério.
+	 * Ao final de um turno com a partida em andamento em que o mosteiro esteja incompleto, 
+	 * a pontuação do jogador não é alterada e o Meeple permanece no mosteiro.
 	 */
 	@Test
-	public void monasterioIncompletoComPartidaEmAndamento() {
-		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62);
-		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
+	public void mosteiroIncompletoComPartidaEmAndamento() {
+		mockarTiles(tiles, t30, t48, t29, t60, t27, t52, t31, t61, t62, t01);
+		Partida partida = jogo.criarPartida(tiles, PRETO, VERMELHO);
 		
 		partida.finalizarTurno();
 		partida.posicionarTile(t30, SUL);
 		partida.posicionarMeepleMosteiro();
 		
-		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");
+		verificarRelatorioTurno(partida, "VERMELHO", "48N", "Tile_Posicionado");
+		verificarRelatorioPartida(partida, "Em_Andamento", "PRETO(0,7); VERMELHO(0,6)");
 		
 		partida.finalizarTurno();
 			
@@ -146,20 +152,25 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 		
 		partida.posicionarTile(t30, LESTE);
 		partida.finalizarTurno();		
-					
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");
+		
+		verificarRelatorioTurno(
+				partida, "VERMELHO", "60N", "Tile_Posicionado");
+		verificarRelatorioPartida(
+				partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");
 		
 	}
 	
 	
 	/**
 	 * Caso de teste 04
-	 * Verifica se lança exceções para tentativas de adicionar Meeples em um Monastério já ocupado por um outro Meeple.
+	 * Verifica se lança exceções para tentativas de adicionar Meeples em momentos inválidos. Não deve ser permitido posicionar dois meeplesMosteiros
+	 * em um mesmo tile e não deve permitir que um meepleMosteiro seja adicionado a um tile que não seja mosteiro.
 	 */
 	@Test
-	public void monasterioComDoisMeeples() {
-		mockarTiles(tiles, t30, t48);
-		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
+	public void meepleMosteiroInvalido() {
+		
+		mockarTiles(tiles, t30, t48, t01, t02);
+		Partida partida = jogo.criarPartida(tiles, PRETO, VERMELHO);
 		partida.finalizarTurno();
 		
 		partida.posicionarTile(t30, SUL);
@@ -168,30 +179,38 @@ public class JogoTestExtensaoMonasterio extends JogoTest{
 		ocorreExcecaoJogo(() -> partida.posicionarMeepleMosteiro(),
 				"Impossível posicionar Meeple: tile já contém Meeple Posicionado");
 		
-		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
-		verificarRelatorioPartida(partida, "Em_Andamento", "VERDE(0,7); PRETO(0,6)");	
+		partida.finalizarTurno();
+		verificarRelatorioTurno(
+				partida, "PRETO", "01N", "Início_Turno");
+		
+		ocorreExcecaoJogo(() -> partida.posicionarMeepleMosteiro(), 
+				"Impossível posicionar Meeple: tile não é Mosteiro" );
+		
+		verificarRelatorioPartida(partida, "Em_Andamento", "PRETO(0,7); VERMELHO(0,6)");	
 	}
 	
 	 
 	/**
 	 * Caso de teste 05
-	 * Se a partida finaliza com o monastério incompleto e há um Meeple, a pontuação do jogador será 
-	 * a quantidade de tiles ao redor do monastério.  
+	 * Se a partida finaliza com o Mosteiro incompleto e há um Meeple, a pontuação do jogador será 
+	 * a quantidade de tiles ao redor do Mosteiro.  
 	 */
 	@Test
-	public void	partidaFinalizadaComMonasterioIncompleto() {
+	public void	partidaFinalizadaComMosteiroIncompleto() {
 		mockarTiles(tiles, t30, t48);
-		Partida partida = jogo.criarPartida(tiles, VERDE, PRETO);
+		Partida partida = jogo.criarPartida(tiles, PRETO, VERMELHO);
 		partida.finalizarTurno();
 		
 		partida.posicionarTile(t30, SUL);
 		partida.posicionarMeepleMosteiro();
-		
-		verificarRelatorioTurno(partida, "PRETO", "48N", "Tile_Posicionado");
-		
 		partida.finalizarTurno();
-		verificarRelatorioPartida(partida, "Partida_Finalizada", "VERDE(0,7); PRETO(2,7)");	
+		
+		verificarRelatorioPartida(partida, 
+				"Partida_Finalizada", "PRETO(0,7); VERMELHO(2,7)");	
 	}
+	
+	
+	
 	
 	
 	/**
